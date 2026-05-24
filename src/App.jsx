@@ -819,9 +819,14 @@ function updateMemory(memory, text, topics, words) {
 }
 
 function getDominantMemory(memory) {
-  const topic = Object.entries(memory.topics).sort((a, b) => b[1] - a[1])[0]?.[0];
-  const keyword = Object.entries(memory.keywords).sort((a, b) => b[1] - a[1])[0]?.[0];
-  return { topic, keyword };
+  const topicEntries = Object.entries(memory.topics).sort((a, b) => b[1] - a[1]);
+  const keywordEntries = Object.entries(memory.keywords).sort((a, b) => b[1] - a[1]);
+  const topic = topicEntries[0]?.[0];
+  const keyword = keywordEntries[0]?.[0];
+  const secondaryTopic = topicEntries[1]?.[0];
+  const topKeywords = keywordEntries.slice(0, 3).map(([k]) => k);
+  const recurrence = keywordEntries[0]?.[1] || 0;
+  return { topic, keyword, secondaryTopic, topKeywords, recurrence };
 }
 
 function buildMemoryFragment(text, topics, words) {
@@ -829,9 +834,14 @@ function buildMemoryFragment(text, topics, words) {
   const topic = topics[0]?.name || "isso";
   const keyword = words[0] || topic;
   const reflected = reflect(text);
-  const question = choose(openQuestions, keyword.length);
-  const finalQuestion = question.includes("{keyword}") ? question.replace("{keyword}", keyword) : question;
-  return `Antes voce trouxe ${topic}, especialmente quando disse que ${reflected}. ${finalQuestion}`;
+  const seed = text.length + words.length;
+  const templates = [
+    `Voce mencionou ${topic} quando disse "${reflected}".`,
+    `Em ${topic}, a palavra "${keyword}" apareceu.`,
+    `"${reflected}" — isso ficou marcado.`,
+    `O assunto ${topic} trouxe "${keyword}" junto.`,
+  ];
+  return choose(templates, seed);
 }
 
 function isQuit(input) {
@@ -908,8 +918,9 @@ function buildReply(input, memory) {
   const reflected = reflect(input);
   const hasQuestion = input.includes("?");
   const turn = nextMemory.turns;
+  const inputLength = normalize(input).length;
   
-  logDebug("buildReply", "Contexto analisado", `palavras=${words.length}, temas=${topics.length}, tema_dominante=${dominant.topic}, turno=${turn}`);
+  logDebug("buildReply", "Contexto analisado", `palavras=${words.length}, temas=${topics.length}, tema_dominante=${dominant.topic}, turno=${turn}, recorrencia=${dominant.recurrence}`);
 
   if (isQuit(input)) {
     logInfo("buildReply", "Detectado encerramento de conversa");
@@ -921,112 +932,152 @@ function buildReply(input, memory) {
     };
   }
 
-  if (normalize(input).length < 4) {
+  if (inputLength < 4) {
     const shortReplies = [
       "Hmm. Continua...",
       "Sei. E o que mais?",
-      "Certo. Fica a vontade pra desenvolver.",
+      "Certo. Fica a vontade.",
       "Entendi. Me diz mais.",
+      "Ok.",
     ];
-    return {
-      text: choose(shortReplies, seed),
-      memory: nextMemory,
-    };
+    return { text: choose(shortReplies, seed), memory: nextMemory };
   }
 
   const ruleReply = applyElizaRules(input, seed);
   
-  const replyStrategy = turn % 5;
-  logDebug("buildReply", "Estratégia de resposta", `turno=${turn}, estrategia=${replyStrategy}`);
+  const phase = turn <= 2 ? "acolhimento" : turn <= 5 ? "coleta" : turn <= 9 ? "leitura" : "profundidade";
+  logDebug("buildReply", "Fase conversacional", `fase=${phase}, turno=${turn}`);
   
-  if (ruleReply) {
-    logInfo("buildReply", "Regra ELIZA aplicada", `regra=${ruleReply.key}`);
-    const endTime = performance.now();
-    logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
-    
-    if (replyStrategy === 0) {
+  if (phase === "acolhimento") {
+    if (ruleReply) {
       return { text: ruleReply.text, memory: nextMemory };
     }
-    if (replyStrategy === 1) {
-      return { text: `${choose(validationPhrases, seed)} ${ruleReply.text}`, memory: nextMemory };
-    }
-    return { text: ruleReply.text, memory: nextMemory };
+    const earlyReplies = [
+      `Entendo. ${choose(openQuestions, seed)}`,
+      `Hmm. ${choose(openQuestions, seed + 1)}`,
+      `Certo. ${choose(validationPhrases, seed)}`,
+      `${choose(validationPhrases, seed)} ${choose(openQuestions, seed + 2)}`,
+      `Sei... ${keyword}. ${choose(openQuestions, seed + 3)}`,
+    ];
+    return { text: choose(earlyReplies, seed), memory: nextMemory };
   }
 
-  if (hasQuestion && turn > 1) {
-    const questionResponses = [
-      `Boa pergunta. Mas antes de eu responder... o que voce acha?`,
-      `Hmm. Voce pergunta sobre ${keyword}, mas me parece que ja tem um palpite. Qual e?`,
-      `Essa e uma daquelas perguntas que a pessoa faz quando ja sabe a resposta mas nao quer admitir. Estou errada?`,
-      `Interessante voce perguntar isso agora. O que mudou pra essa duvida aparecer?`,
-      `${choose(validationPhrases, seed)} Mas me diz: se eu te desse a resposta, o que voce faria com ela?`,
+  if (phase === "coleta") {
+    if (ruleReply) {
+      const complement = seed % 3 === 0 ? ` ${choose(openQuestions, seed + 1)}` : "";
+      return { text: `${ruleReply.text}${complement}`, memory: nextMemory };
+    }
+    
+    if (hasQuestion) {
+      const deflections = [
+        `Boa pergunta. Mas antes: o que voce acha?`,
+        `Hmm. Voce pergunta sobre ${keyword}, mas sinto que ja tem um palpite.`,
+        `Interessante perguntar isso agora. O que mudou?`,
+        `Se eu te desse uma resposta, o que voce faria com ela?`,
+      ];
+      return { text: choose(deflections, seed), memory: nextMemory };
+    }
+
+    if (topics.length > 0) {
+      const probe = choose(topics[0].probes, seed);
+      return { text: probe, memory: nextMemory };
+    }
+
+    const collectReplies = [
+      `${choose(validationPhrases, seed)} ${choose(openQuestions, seed + 1)}`,
+      `Hmm. Isso de ${keyword}... ${choose(openQuestions, seed + 2)}`,
+      `Sei. ${choose(openQuestions, seed)}`,
     ];
+    return { text: choose(collectReplies, seed), memory: nextMemory };
+  }
+
+  if (phase === "leitura") {
+    logInfo("buildReply", "Fase de leitura — usando sinais acumulados");
+    
+    if (ruleReply && seed % 3 !== 0) {
+      return { text: ruleReply.text, memory: nextMemory };
+    }
+
+    if (dominant.recurrence >= 3) {
+      const recurrenceReads = [
+        `Voce ja trouxe "${dominant.keyword}" varias vezes. Isso nao e por acaso.`,
+        `"${dominant.keyword}" continua voltando. Parece que tem algo ali que insiste em ser visto.`,
+        `Percebe que ${dominant.keyword} e como um fio condutor do que voce diz? Me parece central.`,
+      ];
+      return { text: `${choose(recurrenceReads, seed)} ${choose(openQuestions, seed + 2)}`, memory: nextMemory };
+    }
+
+    if (dominant.secondaryTopic && topics.length > 0 && topics[0].name !== dominant.topic) {
+      return {
+        text: `Hmm. Voce comecou mais por ${dominant.topic}, agora aparece ${topics[0].name}. ${choose(fortuneTellerStatements, seed)}`,
+        memory: nextMemory,
+      };
+    }
+
+    if (hasQuestion) {
+      const deepDeflections = [
+        `Essa pergunta parece carregar mais peso do que aparenta. ${choose(fortuneTellerStatements, seed)}`,
+        `Voce pergunta, mas acho que no fundo ja percebeu a resposta. ${choose(openQuestions, seed + 1)}`,
+        `${choose(validationPhrases, seed)} Mas repare: a pergunta que voce faz revela o que voce teme.`,
+      ];
+      return { text: choose(deepDeflections, seed), memory: nextMemory };
+    }
+
+    if (topics.length > 0) {
+      const fortune = choose(fortuneTellerStatements, seed);
+      const probe = choose(topics[0].probes, seed + 1);
+      return { text: seed % 2 === 0 ? fortune : probe, memory: nextMemory };
+    }
+
+    const readingReplies = [
+      `${choose(fortuneTellerStatements, seed)}`,
+      `${choose(coldReadLines, seed)} ${choose(openQuestions, seed + 1)}`,
+      `${choose(validationPhrases, seed)} ${choose(fortuneTellerStatements, seed + 2)}`,
+    ];
+    return { text: choose(readingReplies, seed), memory: nextMemory };
+  }
+
+  logInfo("buildReply", "Fase de profundidade — respostas altamente contextuais");
+  const endTime = performance.now();
+  logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
+
+  if (ruleReply && seed % 4 !== 0) {
+    const memoryWeave = dominant.topKeywords.length >= 2
+      ? ` Nessa conversa, ${dominant.topKeywords[0]} e ${dominant.topKeywords[1]} parecem orbitar um ao redor do outro.`
+      : "";
+    return { text: `${ruleReply.text}${memoryWeave}`, memory: nextMemory };
+  }
+
+  if (dominant.recurrence >= 2 && nextMemory.stack.length > 2) {
+    const deepContextReplies = [
+      `Voce gira em torno de ${dominant.keyword} como se fosse um eixo. ${choose(fortuneTellerStatements, seed)}`,
+      `Percebo um padrao: ${dominant.topKeywords.slice(0, 2).join(", ")}... esses temas se conectam de um jeito que talvez voce ainda nao verbalizou.`,
+      `A cada coisa que voce diz, ${dominant.keyword} reaparece. Como um sinal que insiste. ${choose(openQuestions, seed)}`,
+    ];
+    return { text: choose(deepContextReplies, seed), memory: nextMemory };
+  }
+
+  if (hasQuestion) {
     return {
-      text: choose(questionResponses, seed),
+      text: `Voce pergunta, mas eu acho que a resposta ja esta na propria pergunta. ${choose(coldReadLines, seed)}`,
       memory: nextMemory,
     };
   }
 
   if (topics.length > 0) {
-    const topic = topics[0];
-    logInfo("buildReply", "Construindo resposta de cartomante", `tema=${topic.name}`);
-    
-    if (replyStrategy <= 1) {
-      const probe = choose(topic.probes, seed);
-      return { text: probe, memory: nextMemory };
-    }
-    
-    if (replyStrategy === 2) {
-      const fortune = choose(fortuneTellerStatements, seed);
-      const nudge = choose(openQuestions, seed + 3);
-      return { text: `${fortune} ${nudge}`, memory: nextMemory };
-    }
-    
-    if (replyStrategy === 3) {
-      const validation = choose(validationPhrases, seed);
-      const coldRead = choose(coldReadLines, seed + 1);
-      return { text: `${validation} ${coldRead}`, memory: nextMemory };
-    }
-    
-    if (dominant.topic && dominant.topic !== topic.name) {
-      return {
-        text: `Hmm. Antes era mais sobre ${dominant.topic}, agora voce trouxe ${topic.name}. ${choose(fortuneTellerStatements, seed)}`,
-        memory: nextMemory,
-      };
-    }
-    
-    return {
-      text: `${choose(topic.probes, seed)} ${choose(openQuestions, seed + 2)}`,
-      memory: nextMemory,
-    };
+    const probe = choose(topics[0].probes, seed);
+    const fortune = choose(fortuneTellerStatements, seed + 1);
+    return { text: `${probe} ${fortune}`, memory: nextMemory };
   }
 
-  if (words.length > 0 && turn > 3 && turn % 4 === 0) {
-    const fortune = choose(fortuneTellerStatements, seed);
-    return { text: fortune, memory: nextMemory };
-  }
-
-  if (turn <= 2) {
-    const earlyReplies = [
-      `Entendo. ${choose(openQuestions, seed)}`,
-      `Hmm, ${keyword}... ${choose(openQuestions, seed + 1)}`,
-      `Certo. ${choose(validationPhrases, seed)} ${choose(openQuestions, seed + 2)}`,
-    ];
-    return { text: choose(earlyReplies, seed), memory: nextMemory };
-  }
-
-  logInfo("buildReply", "Usando resposta reflexiva de cartomante");
-  const endTime = performance.now();
-  logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
-  
-  const reflectiveReplies = [
-    `${choose(fortuneTellerStatements, seed)}`,
-    `${choose(coldReadLines, seed)} ${choose(openQuestions, seed + 1)}`,
-    `${choose(validationPhrases, seed)} ${choose(fortuneTellerStatements, seed + 2)}`,
-    `Quando voce fala "${reflected}", eu percebo algo. ${choose(fortuneTellerStatements, seed + 3)}`,
+  const deepReplies = [
+    `${choose(fortuneTellerStatements, seed)} ${choose(coldReadLines, seed + 1)}`,
+    `Quando voce diz "${reflected}", algo se revela. ${choose(fortuneTellerStatements, seed + 2)}`,
+    `${choose(validationPhrases, seed)} ${choose(fortuneTellerStatements, seed + 3)} ${choose(openQuestions, seed + 4)}`,
+    `${choose(coldReadLines, seed)} A parte que voce nao disse e tao importante quanto a que disse.`,
   ];
   return {
-    text: choose(reflectiveReplies, seed),
+    text: choose(deepReplies, seed),
     memory: nextMemory,
   };
 }
@@ -1062,8 +1113,10 @@ function App() {
     setDraft("");
     setIsThinking(true);
 
-    const delay = 650 + Math.min(text.length * 8, 900);
-    logDebug("sendMessage", "Aguardando resposta", `delay_ms=${delay}`);
+    const baseDelay = 800 + Math.min(text.length * 10, 1200);
+    const humanVariation = Math.random() * 600 - 300;
+    const delay = Math.max(600, baseDelay + humanVariation);
+    logDebug("sendMessage", "Aguardando resposta", `delay_ms=${Math.round(delay)}`);
 
     window.setTimeout(() => {
       const reply = buildReply(text, memory);
