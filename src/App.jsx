@@ -1,4 +1,4 @@
-const STORAGE_KEY = "elisa.memory.v1";
+const STORAGE_KEY = "eliza.memory.v1";
 
 // Função compatível para gerar IDs únicos
 function generateId() {
@@ -93,14 +93,14 @@ const initialMessages = [
     role: "assistant",
     text: (() => {
       const greetings = [
-        "Oi. Sou Elisa. Sente-se, respire fundo. Algo trouxe voce ate aqui hoje... o que esta no ar?",
-        "Ola. Eu sou Elisa. Nao precisa explicar tudo de uma vez. So me diz: o que ficou girando na sua cabeca nos ultimos dias?",
-        "Bom te ver por aqui. Sou Elisa. Tenho a impressao de que voce veio com algo especifico, mesmo que ainda nao saiba nomear. Comece por onde quiser.",
-        "Oi. Elisa aqui. As vezes a gente so precisa de um espaco pra pensar em voz alta. Pode ser agora. O que veio primeiro?",
-        "Ola. Sou Elisa. Voce chegou num momento interessante — geralmente quem vem conversar ja percebeu algo, so nao organizou ainda. Me conta.",
-        "Oi. Eu sou Elisa. Nao tem certo nem errado aqui. Apenas fale o que vier. O que esta mais vivo em voce agora?",
-        "Bom dia. Sou Elisa. Sabe quando voce fica ruminando algo por dias e ninguem percebeu? Pois e. Pode soltar aqui.",
-        "Oi. Elisa. Sem pressa, sem formula. Apenas me diz: se voce pudesse falar uma unica coisa sem medo de julgamento, qual seria?",
+        "Oi. Sou Eliza. Sente-se, respire fundo. Algo trouxe voce ate aqui hoje... o que esta no ar?",
+        "Ola. Eu sou Eliza. Nao precisa explicar tudo de uma vez. So me diz: o que ficou girando na sua cabeca nos ultimos dias?",
+        "Bom te ver por aqui. Sou Eliza. Tenho a impressao de que voce veio com algo especifico, mesmo que ainda nao saiba nomear. Comece por onde quiser.",
+        "Oi. Eliza aqui. As vezes a gente so precisa de um espaco pra pensar em voz alta. Pode ser agora. O que veio primeiro?",
+        "Ola. Sou Eliza. Voce chegou num momento interessante — geralmente quem vem conversar ja percebeu algo, so nao organizou ainda. Me conta.",
+        "Oi. Eu sou Eliza. Nao tem certo nem errado aqui. Apenas fale o que vier. O que esta mais vivo em voce agora?",
+        "Bom dia. Sou Eliza. Sabe quando voce fica ruminando algo por dias e ninguem percebeu? Pois e. Pode soltar aqui.",
+        "Oi. Eliza. Sem pressa, sem formula. Apenas me diz: se voce pudesse falar uma unica coisa sem medo de julgamento, qual seria?",
       ];
       const seed = Date.now();
       return greetings[Math.abs(seed) % greetings.length];
@@ -444,14 +444,14 @@ const elizaRules = [
   {
     key: "voce",
     rank: 50,
-    words: ["voce", "elisa"],
+    words: ["voce", "eliza", "elisa"],
     decomps: [
       {
-        pattern: /(?:^| ).*(voce|elisa) (.*)/,
+        pattern: /(?:^| ).*(voce|eliza|elisa) (.*)/,
         replies: [
           "Estamos falando de mim, mas talvez isso diga algo sobre voce. O que voce percebe?",
           "O que faria diferenca se eu {2}?",
-          "Por que voce coloca Elisa nessa parte da historia?",
+          "Por que voce coloca Eliza nessa parte da historia?",
         ],
       },
     ],
@@ -1083,7 +1083,7 @@ function buildReply(input, memory) {
 }
 
 function App() {
-  logInfo("App", "Inicializando componente Elisa");
+  logInfo("App", "Inicializando componente Eliza");
   const [messages, setMessages] = React.useState(initialMessages);
   const [memory, setMemory] = React.useState(loadMemory);
   const [draft, setDraft] = React.useState("");
@@ -1145,7 +1145,7 @@ function App() {
       </a>
       
       <header className="page-header">
-        <img src="./images/header_eliza.png" alt="Elisa Header" className="header-image" />
+        <img src="./images/header_eliza.png" alt="Eliza Header" className="header-image" />
       </header>
       <aside className="sidebar" aria-label="Memoria da conversa">
         <div className="visitor-counter">
@@ -1159,7 +1159,7 @@ function App() {
         <div className="brand">
           <div className="mark">E</div>
           <div>
-            <h1>Elisa</h1>
+            <h1>Eliza</h1>
             <p>Experimento conversacional</p>
           </div>
         </div>
@@ -1187,11 +1187,11 @@ function App() {
         </button>
       </aside>
 
-      <section className="chat" aria-label="Conversa com Elisa">
+      <section className="chat" aria-label="Conversa com Eliza">
         <header className="chat-header">
           <div>
             <h2>Conversa</h2>
-            <p>Elisa observa palavras, temas e repeticoes para conduzir o dialogo.</p>
+            <p>Eliza observa palavras, temas e repeticoes para conduzir o dialogo.</p>
           </div>
         </header>
 
