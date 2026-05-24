@@ -53,6 +53,40 @@ textarea {
   object-fit: cover;
 }
 
+.github-ribbon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  text-decoration: none;
+}
+
+.github-ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 8px 0;
+  background: #24292e;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  top: 42px;
+  right: -55px;
+  transform: rotate(45deg);
+  transition: background 0.3s ease;
+}
+
+.github-ribbon:hover span {
+  background: #2ea44f;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -365,6 +399,19 @@ textarea {
 
   .page-header {
     display: none;
+  }
+
+  .github-ribbon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .github-ribbon span {
+    width: 150px;
+    padding: 5px 0;
+    top: 28px;
+    right: -38px;
+    font-size: 10px;
   }
 
   .sidebar {

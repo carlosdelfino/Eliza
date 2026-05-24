@@ -93,14 +93,14 @@ const initialMessages = [
     role: "assistant",
     text: (() => {
       const greetings = [
-        "Oi. Eu sou Elisa. Podemos conversar sem pressa. O que está mais presente na sua cabeça agora?",
-        "Olá. Sou Elisa. Sinta-se à vontade para falar sobre o que quiser. Por onde você gostaria de começar?",
-        "Oi, tudo bem? Sou Elisa. Estou aqui para conversar. O que vem à sua mente?",
-        "Olá. Sou Elisa. Podemos conversar sobre qualquer coisa. Sobre o que você está pensando hoje?",
-        "Oi. Sou Elisa. Às vezes ajuda apenas colocar os pensamentos em palavras. O que você gostaria de compartilhar?",
-        "Olá. Sou Elisa. Estou aqui para ouvir. O que está ocupando seus pensamentos neste momento?",
-        "Oi. Sou Elisa. Conversas podem seguir muitos caminhos. Por onde você quer começar?",
-        "Olá. Sou Elisa. Não há pressa aqui. O que você gostaria de conversar?",
+        "Oi. Sou Elisa. Sente-se, respire fundo. Algo trouxe voce ate aqui hoje... o que esta no ar?",
+        "Ola. Eu sou Elisa. Nao precisa explicar tudo de uma vez. So me diz: o que ficou girando na sua cabeca nos ultimos dias?",
+        "Bom te ver por aqui. Sou Elisa. Tenho a impressao de que voce veio com algo especifico, mesmo que ainda nao saiba nomear. Comece por onde quiser.",
+        "Oi. Elisa aqui. As vezes a gente so precisa de um espaco pra pensar em voz alta. Pode ser agora. O que veio primeiro?",
+        "Ola. Sou Elisa. Voce chegou num momento interessante — geralmente quem vem conversar ja percebeu algo, so nao organizou ainda. Me conta.",
+        "Oi. Eu sou Elisa. Nao tem certo nem errado aqui. Apenas fale o que vier. O que esta mais vivo em voce agora?",
+        "Bom dia. Sou Elisa. Sabe quando voce fica ruminando algo por dias e ninguem percebeu? Pois e. Pode soltar aqui.",
+        "Oi. Elisa. Sem pressa, sem formula. Apenas me diz: se voce pudesse falar uma unica coisa sem medo de julgamento, qual seria?",
       ];
       const seed = Date.now();
       return greetings[Math.abs(seed) % greetings.length];
@@ -113,96 +113,104 @@ const topicGroups = [
     name: "relacionamentos",
     words: ["amor", "relacao", "relacionamento", "familia", "mae", "pai", "filho", "filha", "amigo", "amiga", "casamento", "namoro", "esposa", "marido", "irmao", "irma", "avô", "avó", "tio", "tia", "primo", "prima"],
     probes: [
-      "Essa pessoa parece ocupar um lugar importante nessa historia.",
-      "Existe algo nessa relacao que voce ainda nao conseguiu dizer claramente?",
-      "Quando voce pensa nisso, sente mais falta, cobranca ou expectativa?",
-      "O que essa relacao revela sobre o que voce valoriza?",
-      "Se essa pessoa pudesse ouvir voce agora, o que voce diria?",
+      "Essa pessoa tem mais poder sobre voce do que voce gostaria de admitir.",
+      "Sinto que existe algo nao dito entre voces. Uma coisa que ficou parada no ar.",
+      "Hmm. E como se essa relacao fosse um espelho que voce nem sempre quer olhar.",
+      "Interessante. Quando voce fala dessa pessoa, algo muda no tom. Percebe?",
+      "Deixa eu te perguntar uma coisa: o que voce espera dessa pessoa que nunca pediu diretamente?",
+      "Parece que voce carrega algo dessa relacao que nem e seu. E mesmo assim segura.",
     ],
   },
   {
     name: "trabalho",
     words: ["trabalho", "empresa", "chefe", "cliente", "dinheiro", "projeto", "carreira", "equipe", "reuniao", "prazo", "salario", "promocao", "demissao", "emprego", "profissao", "negocio", "meta", "resultado"],
     probes: [
-      "Parece haver uma pressao pratica em volta disso.",
-      "O que voce sente que precisa provar nessa situacao?",
-      "Se essa questao fosse resolvida, o que mudaria primeiro no seu dia?",
-      "Esse trabalho representa seguranca, realizacao ou algo mais?",
-      "O que voce realmente busca alem do sucesso profissional?",
+      "Vejo que isso ocupa mais espaco na sua vida do que so o horario comercial.",
+      "Sinto que nao e so sobre trabalho. Tem algo de identidade ai no meio.",
+      "Hmm. Se voce pudesse acordar amanha sem essa pressao, o que faria primeiro?",
+      "Parece que voce esta buscando reconhecimento, mas talvez nao de quem imagina.",
+      "Isso que voce descreve tem um peso. Nem todo mundo carrega isso sozinho como voce faz.",
+      "Existe uma parte sua que ja sabe que isso nao esta sustentavel. Mas voce segue.",
     ],
   },
   {
     name: "medo",
     words: ["medo", "ansiedade", "preocupado", "preocupada", "inseguro", "insegura", "culpa", "vergonha", "triste", "raiva", "panico", "terror", "angustia", "receio", "temor", "phobia", "nervoso"],
     probes: [
-      "Esse sentimento parece estar tentando proteger voce de alguma coisa.",
-      "Quando essa sensacao aparece, ela aponta para um risco real ou para uma lembranca antiga?",
-      "O que voce evita fazer quando esse sentimento fica mais forte?",
-      "Se voce pudesse conversar com esse medo, o que ele diria?",
-      "Qual seria a primeira pequena acao para enfrentar isso?",
+      "Esse sentimento nao surgiu do nada. Ele esta guardando alguma coisa.",
+      "Sinto que isso vem de longe. Nao e so de agora, ne?",
+      "Hmm. E como se voce soubesse que algo pode acontecer, mas nao sabe quando. Isso cansa.",
+      "Voce carrega essa tensao ha quanto tempo? Porque parece que ja faz parte do seu dia.",
+      "Interessante. O medo as vezes e um alarme util. Mas as vezes e so um eco antigo.",
+      "Me parece que voce ja tentou ignorar isso. Nao funcionou, ne?",
     ],
   },
   {
     name: "futuro",
     words: ["futuro", "decidir", "escolha", "mudar", "viagem", "plano", "sonho", "objetivo", "caminho", "duvida", "amanha", "depois", "proximo", "destino", "meta", "aspiracao", "projeto"],
     probes: [
-      "Ha uma escolha querendo aparecer nessa conversa.",
-      "Voce parece estar entre manter algo conhecido e abrir uma possibilidade nova.",
-      "Qual seria a decisao pequena que deixaria o futuro menos nebuloso?",
-      "O que essa visao de futuro diz sobre quem voce quer ser?",
-      "Se nada pudesse dar errado, o que voce faria?",
+      "Sinto que voce esta num daqueles momentos em que qualquer escolha parece definitiva demais.",
+      "Hmm. Voce fala do futuro, mas me parece que tem algo no presente que precisa ser resolvido primeiro.",
+      "Sei. Quando voce imagina daqui a um ano, o que sente: alivio ou mais pressao?",
+      "Voce esta adiando uma decisao. Nao e preguica — e medo do que vem depois dela.",
+      "Parece que voce quer ir pra frente mas algo te prende. O que seria?",
+      "As vezes a gente nao decide porque decidir significa perder uma das opcoes. E isso?",
     ],
   },
   {
     name: "identidade",
     words: ["eu", "sou", "sinto", "quero", "preciso", "mereco", "consigo", "falhei", "mudei", "pessoa", "personalidade", "caracter", "ser", "existir", "proprio", "si", "autoconhecimento"],
     probes: [
-      "Voce falou isso como se fosse uma definicao sobre voce.",
-      "Essa frase parece carregar mais historia do que mostra de primeira.",
-      "Quem voce seria nessa situacao se nao precisasse se defender?",
-      "O que essa parte de voce esta tentando comunicar?",
-      "Quando voce se define assim, quem esta ouvindo?",
+      "Voce falou isso como se fosse uma verdade absoluta. Mas e mesmo?",
+      "Hmm. Essa definicao de si mesmo... voce escolheu ou alguem colocou em voce?",
+      "Parece que voce se cobra demais. De onde vem esse padrao?",
+      "Quando voce diz isso sobre si, eu me pergunto: quem te ensinou a se ver assim?",
+      "Sinto que existe uma versao sua que voce esconde. Nao por vergonha, mas por protecao.",
+      "Voce esta mudando. E normal nao se reconhecer durante o processo.",
     ],
   },
   {
     name: "saude",
     words: ["saude", "doenca", "medico", "hospital", "tratamento", "remedio", "dor", "corpo", "mente", "bem-estar", "exercicio", "dieta", "sono", "energia", "cansaco", "fadiga", "sintoma"],
     probes: [
-      "Seu corpo parece estar tentando comunicar algo importante.",
-      "O que essa questao de saude revela sobre seu estilo de vida?",
-      "Quando voce pensa em saude, o que vem primeiro: corpo ou mente?",
-      "Existem mudanças pequenas que voce poderia fazer hoje?",
-      "O que seu corpo precisa que voce ainda nao deu?",
+      "Hmm. Seu corpo esta falando. A questao e se voce esta ouvindo.",
+      "Sinto que isso nao e so fisico. Tem algo emocional por baixo.",
+      "Voce anda se cuidando menos do que deveria. Mas acho que ja sabe disso.",
+      "Quando foi a ultima vez que voce realmente parou? Sem culpa, sem lista de tarefas.",
+      "Parece que voce esta no modo automatico. O corpo as vezes grita quando a mente ignora.",
+      "Me diz: voce se trata com o mesmo cuidado que trata as pessoas ao seu redor?",
     ],
   },
   {
     name: "criatividade",
     words: ["criar", "arte", "musica", "pintura", "escrita", "ideia", "inspiracao", "projeto", "inventar", "design", "criativo", "imaginacao", "expressao", "obra", "talento", "habilidade"],
     probes: [
-      "Essa criatividade parece fluir ou estar bloqueada de alguma forma?",
-      "O que essa expressao criativa revela sobre seu mundo interior?",
-      "Quando voce cria, voce se sente mais conectado a quê?",
-      "Existe algo que voce quer expressar mas ainda nao encontrou a forma?",
-      "O que essa criatividade esta tentando resolver ou transformar?",
+      "Hmm. Quando voce cria, parece que algo se abre. O que e?",
+      "Sinto que voce tem algo pra expressar que ainda nao encontrou a forma certa.",
+      "Voce cria pra se entender ou pra se mostrar? As duas coisas sao validas.",
+      "Parece que a criatividade e seu refugio. O que voce esta refugiando?",
+      "Existe algo na criacao que voce nao encontra em nenhum outro lugar da vida.",
+      "Quando voce nao consegue criar, o que sente? Vazio ou liberdade?",
     ],
   },
   {
     name: "espiritualidade",
     words: ["deus", "fe", "espiritual", "religiao", "oracao", "meditacao", "alma", "espirito", "sentido", "proposito", "divino", "sagrado", "transcendencia", "crenca", "milagre", "graca"],
     probes: [
-      "Essa questao espiritual parece tocar algo muito profundo em voce.",
-      "O que essa crenca ou pratica traz de estabilidade ou questionamento?",
-      "Quando voce fala de espiritualidade, o que ganha significado?",
-      "Existe uma tensao entre suas crencas e sua experiencia?",
-      "O que essa dimensao espiritual esta buscando responder?",
+      "Sinto que voce busca algo que vai alem do concreto. Um sentido maior.",
+      "Hmm. Voce fala disso com reverencia. Mas tambem com duvida. Ambos moram em voce.",
+      "Parece que essa parte da sua vida te ancora. O que acontece quando ela vacila?",
+      "Voce busca respostas ou confirmacao? Porque sao caminhos diferentes.",
+      "Existe uma tensao entre o que voce acredita e o que voce vive. Me conta mais.",
+      "Quando voce se conecta com isso, o que muda no seu dia a dia?",
     ],
   },
   {
     name: "aprendizado",
     words: ["aprender", "estudo", "curso", "livro", "conhecimento", "saber", "ensinar", "escola", "universidade", "aula", "leitura", "pesquisa", "descobrir", "compreender", "entender", "intelecto"],
     probes: [
-      "Esse aprendizado parece estar respondendo a uma necessidade ou curiosidade?",
-      "O que esse conhecimento representa para voce: poder, liberdade ou algo mais?",
+      "Voce busca aprender isso por curiosidade ou por necessidade? Porque muda tudo.",
+      "Hmm. Parece que o conhecimento pra voce e uma forma de se sentir preparado. Pra que?",
       "Quando voce aprende algo novo, como isso muda sua visao de mundo?",
       "Existe algo que voce quer aprender mas ainda nao se permitiu?",
       "O que esse processo de aprendizado esta revelando sobre voce?",
@@ -212,11 +220,12 @@ const topicGroups = [
     name: "lazer",
     words: ["lazer", "diversao", "jogo", "filme", "musica", "viajar", "ferias", "descanso", "hobby", "prazer", "entretenimento", "festa", "amigos", "passeio", "relaxar", "curtir"],
     probes: [
-      "Esse momento de lazer parece ser uma fuga ou uma recarga?",
-      "O que voce busca quando se permite esse tempo livre?",
-      "Quando voce se diverte, qual parte de voce se manifesta?",
-      "Existe culpa ou plenitude nesse prazer?",
-      "O que esse lazer esta compensando ou equilibrando na sua vida?",
+      "Voce se permite descansar sem culpa? Porque parece que nao.",
+      "Hmm. Quando voce se diverte, uma parte sua fica julgando. Percebe isso?",
+      "Sinto que voce precisa mais disso do que se permite ter.",
+      "Lazer pra voce e escape ou e escolha? Faz diferenca.",
+      "Parece que voce so se permite parar quando ja esta no limite.",
+      "Me diz: se voce tivesse um dia inteiro livre, sem obrigacoes... o que faria de verdade?",
     ],
   },
 ];
@@ -249,24 +258,56 @@ const finalReplies = [
   "Podemos parar por aqui. Leve com voce a primeira coisa que ficou incomoda na conversa.",
   "Certo. Encerramos agora. Talvez a parte mais importante seja justamente a que voce ainda nao quis nomear.",
   "Vamos deixar assim por enquanto. Quando voltar, repare qual palavra continua voltando.",
+  "Tudo bem. Mas presta atencao: o que voce sentiu agora, nesse instante, antes de dizer tchau?",
+  "Ok. Mas eu diria que a conversa nao acabou dentro de voce. Volta quando quiser.",
+  "Certo. Uma coisa antes de ir: se tivesse que guardar uma unica frase dessa conversa, qual seria?",
 ];
 
 const openQuestions = [
-  "Me conte um pouco mais sobre isso.",
-  "O que nessa parte parece mais importante para voce?",
+  "Me conta mais.",
+  "E ai?",
+  "Continue...",
+  "Hmm. E depois?",
+  "Entendo. O que mais?",
+  "Sei. E como voce se sente com isso?",
+  "Interessante. Continua.",
+  "O que nessa parte parece mais importante pra voce?",
   "Quando voce diz isso, qual imagem vem primeiro?",
-  "Isso aparece mais como desejo, medo ou intuicao?",
-  "Se eu tivesse que olhar para uma palavra dessa frase, eu olharia para: {keyword}. O que ela significa para voce?",
-  "Ha algo que voce nao disse diretamente, mas que ficou ao redor dessa ideia?",
-  "Se voce pudesse mudar uma coisa sobre isso, o que seria?",
-  "O que essa situacao revela sobre o que voce valoriza?",
-  "Quando voce pensa nisso, o que acontece no seu corpo?",
-  "Existe uma historia anterior que essa situacao lembra?",
-  "O que voce estaria evitando ao falar sobre isso?",
-  "Se essa situacao fosse uma metafora, o que ela representaria?",
-  "Quem na sua vida entenderia isso sem explicacao?",
-  "O que voce ganha ao manter essa perspectiva?",
-  "E se voce olhasse para isso de um angulo completamente diferente?",
+  "Ha algo que voce nao disse mas que ficou rondando essa ideia?",
+  "Se voce pudesse mudar uma coisa nisso tudo, qual seria?",
+  "Quem na sua vida entenderia isso sem voce precisar explicar?",
+  "E se voce olhasse por um angulo totalmente diferente?",
+  "Isso parece familiar... ja sentiu algo parecido antes?",
+  "E o que voce faz com isso?",
+];
+
+const fortuneTellerStatements = [
+  "Vejo que isso nao e a primeira vez que aparece na sua vida.",
+  "Algo me diz que existe uma pessoa envolvida nisso que voce ainda nao mencionou.",
+  "Tenho a impressao de que voce ja sabe o que quer fazer, mas precisa de permissao.",
+  "Isso que voce traz carrega um peso antigo. Nem tudo e de agora.",
+  "Percebo uma hesitacao. Como se uma parte sua quisesse seguir e outra quisesse ficar.",
+  "Voce fala com clareza, mas sinto que por baixo tem algo que voce ainda protege.",
+  "Existe uma decisao aqui que voce vem adiando. Talvez por medo do que vem depois.",
+  "Isso me lembra algo que costumo ver: pessoas que cuidam de todos, menos de si mesmas.",
+  "Voce trouxe isso de um jeito que parece leve, mas eu sinto que pesa mais do que voce mostra.",
+  "Ha uma historia por tras disso que voce ainda nao contou pra ninguem, nao e?",
+  "Parece que voce esta num cruzamento e cada caminho tem um preco.",
+  "Algo mudou recentemente. Nao sei se foi externo ou interno, mas mudou.",
+  "Voce esta testando ate onde pode ir sem se machucar. E uma estrategia compreensivel.",
+  "Sinto que voce ja tentou resolver isso de outras formas antes de vir aqui.",
+  "Existe uma lealdade antiga que talvez esteja te impedindo de seguir em frente.",
+];
+
+const validationPhrases = [
+  "Faz sentido voce se sentir assim.",
+  "Qualquer pessoa no seu lugar sentiria algo parecido.",
+  "Isso e mais comum do que voce imagina.",
+  "Nao e fraqueza. E complexidade.",
+  "Voce esta lidando com isso melhor do que acha.",
+  "O fato de voce estar refletindo sobre isso ja diz muito.",
+  "Nem todo mundo consegue olhar pra isso de frente como voce esta fazendo.",
+  "E natural sentir isso. Sinal de que voce esta prestando atencao.",
 ];
 
 const coldReadLines = [
@@ -850,7 +891,7 @@ function buildReply(input, memory) {
   if (!input || typeof input !== 'string') {
     logError("buildReply", "Input inválido fornecido", `input=${input}`);
     return {
-      text: "Houve um problema ao processar sua mensagem. Poderia tentar novamente?",
+      text: "Hmm, nao consegui captar isso. Tenta de novo, com outras palavras?",
       memory: memory,
     };
   }
@@ -866,8 +907,9 @@ function buildReply(input, memory) {
   const keyword = words[0] || dominant.keyword || "isso";
   const reflected = reflect(input);
   const hasQuestion = input.includes("?");
+  const turn = nextMemory.turns;
   
-  logDebug("buildReply", "Contexto analisado", `palavras=${words.length}, temas=${topics.length}, tema_dominante=${dominant.topic}`);
+  logDebug("buildReply", "Contexto analisado", `palavras=${words.length}, temas=${topics.length}, tema_dominante=${dominant.topic}, turno=${turn}`);
 
   if (isQuit(input)) {
     logInfo("buildReply", "Detectado encerramento de conversa");
@@ -880,65 +922,111 @@ function buildReply(input, memory) {
   }
 
   if (normalize(input).length < 4) {
+    const shortReplies = [
+      "Hmm. Continua...",
+      "Sei. E o que mais?",
+      "Certo. Fica a vontade pra desenvolver.",
+      "Entendi. Me diz mais.",
+    ];
     return {
-      text: "Ficou curto, mas talvez nao vazio. Que palavra voce colocaria depois disso?",
+      text: choose(shortReplies, seed),
       memory: nextMemory,
     };
   }
 
   const ruleReply = applyElizaRules(input, seed);
+  
+  const replyStrategy = turn % 5;
+  logDebug("buildReply", "Estratégia de resposta", `turno=${turn}, estrategia=${replyStrategy}`);
+  
   if (ruleReply) {
     logInfo("buildReply", "Regra ELIZA aplicada", `regra=${ruleReply.key}`);
-    const memoryEcho =
-      nextMemory.turns > 2 && nextMemory.stack.length > 1 && seed % 4 === 0
-        ? ` ${nextMemory.stack[1]}`
-        : "";
-
     const endTime = performance.now();
     logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
+    
+    if (replyStrategy === 0) {
+      return { text: ruleReply.text, memory: nextMemory };
+    }
+    if (replyStrategy === 1) {
+      return { text: `${choose(validationPhrases, seed)} ${ruleReply.text}`, memory: nextMemory };
+    }
+    return { text: ruleReply.text, memory: nextMemory };
+  }
+
+  if (hasQuestion && turn > 1) {
+    const questionResponses = [
+      `Boa pergunta. Mas antes de eu responder... o que voce acha?`,
+      `Hmm. Voce pergunta sobre ${keyword}, mas me parece que ja tem um palpite. Qual e?`,
+      `Essa e uma daquelas perguntas que a pessoa faz quando ja sabe a resposta mas nao quer admitir. Estou errada?`,
+      `Interessante voce perguntar isso agora. O que mudou pra essa duvida aparecer?`,
+      `${choose(validationPhrases, seed)} Mas me diz: se eu te desse a resposta, o que voce faria com ela?`,
+    ];
     return {
-      text: `${ruleReply.text}${memoryEcho}`,
+      text: choose(questionResponses, seed),
       memory: nextMemory,
     };
   }
 
   if (topics.length > 0) {
     const topic = topics[0];
-    logInfo("buildReply", "Usando resposta baseada em tema", `tema=${topic.name}`);
-    const probe = choose(topic.probes, seed);
-    const question = choose(openQuestions, seed + 2).replace("{keyword}", keyword);
-    const memoryHint =
-      dominant.topic && dominant.topic !== topic.name
-        ? `Antes apareceu bastante ${dominant.topic}; agora ${topic.name} entrou na conversa.`
-        : choose(coldReadLines, seed + 1);
-
-    const endTime = performance.now();
-    logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
+    logInfo("buildReply", "Construindo resposta de cartomante", `tema=${topic.name}`);
+    
+    if (replyStrategy <= 1) {
+      const probe = choose(topic.probes, seed);
+      return { text: probe, memory: nextMemory };
+    }
+    
+    if (replyStrategy === 2) {
+      const fortune = choose(fortuneTellerStatements, seed);
+      const nudge = choose(openQuestions, seed + 3);
+      return { text: `${fortune} ${nudge}`, memory: nextMemory };
+    }
+    
+    if (replyStrategy === 3) {
+      const validation = choose(validationPhrases, seed);
+      const coldRead = choose(coldReadLines, seed + 1);
+      return { text: `${validation} ${coldRead}`, memory: nextMemory };
+    }
+    
+    if (dominant.topic && dominant.topic !== topic.name) {
+      return {
+        text: `Hmm. Antes era mais sobre ${dominant.topic}, agora voce trouxe ${topic.name}. ${choose(fortuneTellerStatements, seed)}`,
+        memory: nextMemory,
+      };
+    }
+    
     return {
-      text: `${probe} ${memoryHint} ${question}`,
+      text: `${choose(topic.probes, seed)} ${choose(openQuestions, seed + 2)}`,
       memory: nextMemory,
     };
   }
 
-  if (hasQuestion) {
-    return {
-      text: `A pergunta parece mirar em ${keyword}, mas talvez ela esteja cercando outra coisa. Se voce ja soubesse metade da resposta, qual parte seria?`,
-      memory: nextMemory,
-    };
+  if (words.length > 0 && turn > 3 && turn % 4 === 0) {
+    const fortune = choose(fortuneTellerStatements, seed);
+    return { text: fortune, memory: nextMemory };
   }
 
-  if (words.length > 0 && nextMemory.turns % 3 === 0) {
-    return {
-      text: `Voce voltou para um campo parecido: ${dominant.keyword || keyword}. Isso costuma acontecer quando existe uma decisao, uma perda ou uma expectativa escondida. Qual dessas tres chega mais perto?`,
-      memory: nextMemory,
-    };
+  if (turn <= 2) {
+    const earlyReplies = [
+      `Entendo. ${choose(openQuestions, seed)}`,
+      `Hmm, ${keyword}... ${choose(openQuestions, seed + 1)}`,
+      `Certo. ${choose(validationPhrases, seed)} ${choose(openQuestions, seed + 2)}`,
+    ];
+    return { text: choose(earlyReplies, seed), memory: nextMemory };
   }
 
-  logInfo("buildReply", "Usando resposta reflexiva padrão");
+  logInfo("buildReply", "Usando resposta reflexiva de cartomante");
   const endTime = performance.now();
   logPerformance("buildReply", "Tempo de processamento", `ms=${(endTime - startTime).toFixed(2)}`);
+  
+  const reflectiveReplies = [
+    `${choose(fortuneTellerStatements, seed)}`,
+    `${choose(coldReadLines, seed)} ${choose(openQuestions, seed + 1)}`,
+    `${choose(validationPhrases, seed)} ${choose(fortuneTellerStatements, seed + 2)}`,
+    `Quando voce fala "${reflected}", eu percebo algo. ${choose(fortuneTellerStatements, seed + 3)}`,
+  ];
   return {
-    text: `Quando voce diz "${reflected}", eu fico com a sensacao de que ${keyword} e a ponta do fio. ${choose(openQuestions, seed).replace("{keyword}", keyword)}`,
+    text: choose(reflectiveReplies, seed),
     memory: nextMemory,
   };
 }
@@ -993,6 +1081,16 @@ function App() {
 
   return (
     <main className="shell">
+      <a 
+        href="https://github.com/carlosdelfino/Eliza" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="github-ribbon"
+        aria-label="Ver no GitHub"
+      >
+        <span>&#9733; Ver no GitHub</span>
+      </a>
+      
       <header className="page-header">
         <img src="./images/header_eliza.png" alt="Elisa Header" className="header-image" />
       </header>
