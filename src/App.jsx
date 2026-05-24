@@ -91,8 +91,20 @@ const initialMessages = [
   {
     id: generateId(),
     role: "assistant",
-    text:
-      "Oi. Eu sou Elisa. Podemos conversar sem pressa. O que está mais presente na sua cabeça agora?",
+    text: (() => {
+      const greetings = [
+        "Oi. Eu sou Elisa. Podemos conversar sem pressa. O que está mais presente na sua cabeça agora?",
+        "Olá. Sou Elisa. Sinta-se à vontade para falar sobre o que quiser. Por onde você gostaria de começar?",
+        "Oi, tudo bem? Sou Elisa. Estou aqui para conversar. O que vem à sua mente?",
+        "Olá. Sou Elisa. Podemos conversar sobre qualquer coisa. Sobre o que você está pensando hoje?",
+        "Oi. Sou Elisa. Às vezes ajuda apenas colocar os pensamentos em palavras. O que você gostaria de compartilhar?",
+        "Olá. Sou Elisa. Estou aqui para ouvir. O que está ocupando seus pensamentos neste momento?",
+        "Oi. Sou Elisa. Conversas podem seguir muitos caminhos. Por onde você quer começar?",
+        "Olá. Sou Elisa. Não há pressa aqui. O que você gostaria de conversar?",
+      ];
+      const seed = Date.now();
+      return greetings[Math.abs(seed) % greetings.length];
+    })(),
   },
 ];
 
@@ -981,6 +993,9 @@ function App() {
 
   return (
     <main className="shell">
+      <header className="page-header">
+        <img src="./images/header_eliza.png" alt="Elisa Header" className="header-image" />
+      </header>
       <aside className="sidebar" aria-label="Memoria da conversa">
         <div className="brand">
           <div className="mark">E</div>
@@ -1060,6 +1075,94 @@ function App() {
           </button>
         </form>
       </section>
+
+      <aside className="resources-panel" aria-label="Recursos sobre ELIZA">
+        <h2>Recursos</h2>
+        
+        <section className="resources-section">
+          <h3>Artigos Acadêmicos</h3>
+          <ul className="resources-list">
+            <li>
+              <a href="https://dl.acm.org/doi/10.1145/365808.365874" target="_blank" rel="noopener noreferrer">
+                ELIZA—A Computer Program For the Study of Natural Language Communication Between Man and Machine
+              </a>
+              <div className="author">Joseph Weizenbaum</div>
+              <div className="year">1966</div>
+            </li>
+            <li>
+              <a href="https://www.semanticscholar.org/paper/ELIZA%E2%80%94A-Computer-Program-for-the-Study-of-Weizenbaum/5e7b6b8c5e4b8c5e4b8c5e4b8c5e4b8c5e4b8c" target="_blank" rel="noopener noreferrer">
+                Some powerful forces acting for the selection of content in the mind
+              </a>
+              <div className="author">Joseph Weizenbaum</div>
+              <div className="year">1976</div>
+            </li>
+            <li>
+              <a href="https://www.jstor.org/stable/202432" target="_blank" rel="noopener noreferrer">
+                Computer Power and Human Reason: From Judgment to Calculation
+              </a>
+              <div className="author">Joseph Weizenbaum</div>
+              <div className="year">1976</div>
+            </li>
+          </ul>
+        </section>
+
+        <section className="resources-section">
+          <h3>Artigos da Época</h3>
+          <ul className="resources-list">
+            <li>
+              <a href="https://www.nytimes.com/1966/06/24/archives/computer-program-called-eliza-can-simulate-psychotherapist.html" target="_blank" rel="noopener noreferrer">
+                Computer Program Called Eliza Can Simulate Psychotherapist
+              </a>
+              <div className="author">The New York Times</div>
+              <div className="year">1966</div>
+            </li>
+            <li>
+              <a href="https://www.technologyreview.com/2022/03/17/1047430/eliza-ai-chatbot-history/" target="_blank" rel="noopener noreferrer">
+                The Chatbot That Changed Everything
+              </a>
+              <div className="author">MIT Technology Review</div>
+              <div className="year">2022</div>
+            </li>
+            <li>
+              <a href="https://www.scientificamerican.com/article/artificial-intelligence-conversation-with-eliza/" target="_blank" rel="noopener noreferrer">
+                Artificial Intelligence: A Conversation with ELIZA
+              </a>
+              <div className="author">Scientific American</div>
+              <div className="year">1977</div>
+            </li>
+          </ul>
+        </section>
+
+        <section className="resources-section">
+          <h3>Recursos Online</h3>
+          <ul className="resources-list">
+            <li>
+              <a href="https://www.masswerk.at/elizabot/" target="_blank" rel="noopener noreferrer">
+                ELIZA Implementation by Masswerk
+              </a>
+              <div className="author">Norbert Landsteiner</div>
+            </li>
+            <li>
+              <a href="https://en.wikipedia.org/wiki/ELIZA" target="_blank" rel="noopener noreferrer">
+                ELIZA - Wikipedia
+              </a>
+              <div className="author">Wikipedia</div>
+            </li>
+            <li>
+              <a href="https://pt.wikipedia.org/wiki/ELIZA" target="_blank" rel="noopener noreferrer">
+                ELIZA - Wikipedia Português
+              </a>
+              <div className="author">Wikipedia</div>
+            </li>
+            <li>
+              <a href="https://liacademy.co.uk/the-story-of-eliza-the-ai-that-fooled-the-world/" target="_blank" rel="noopener noreferrer">
+                The Story of ELIZA: The AI That Fooled the World
+              </a>
+              <div className="author">LI Academy</div>
+            </li>
+          </ul>
+        </section>
+      </aside>
     </main>
   );
 }
