@@ -1,5 +1,14 @@
 const STORAGE_KEY = "elisa.memory.v1";
 
+// Função compatível para gerar IDs únicos
+function generateId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback para navegadores que não suportam crypto.randomUUID
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 9);
+}
+
 // Sistema de Logging
 const EMOTICONS = {
   rocket: "🚀",
@@ -80,7 +89,7 @@ function logPerformance(functionName, message, params = "") {
 
 const initialMessages = [
   {
-    id: crypto.randomUUID(),
+    id: generateId(),
     role: "assistant",
     text:
       "Oi. Eu sou Elisa. Podemos conversar sem pressa. O que está mais presente na sua cabeça agora?",
@@ -948,7 +957,7 @@ function App() {
     if (!text || isThinking) return;
 
     logInfo("sendMessage", "Enviando mensagem do usuário", `texto=${text.substring(0, 30)}...`);
-    const userMessage = { id: crypto.randomUUID(), role: "user", text };
+    const userMessage = { id: generateId(), role: "user", text };
     setMessages((current) => [...current, userMessage]);
     setDraft("");
     setIsThinking(true);
@@ -961,7 +970,7 @@ function App() {
       setMemory(reply.memory);
       setMessages((current) => [
         ...current,
-        { id: crypto.randomUUID(), role: "assistant", text: reply.text },
+        { id: generateId(), role: "assistant", text: reply.text },
       ]);
       setIsThinking(false);
       logSuccess("sendMessage", "Resposta enviada ao usuário");
