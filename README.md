@@ -4,7 +4,11 @@
 ![React](https://img.shields.io/badge/React-18-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow)
 ![Status](https://img.shields.io/badge/Status-Experimento%20Social-brightgreen)
+![GitHub Stars](https://img.shields.io/github/stars/carlosdelfino/Eliza?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/carlosdelfino/Eliza?style=social)
+![GitHub Issues](https://img.shields.io/github/issues/carlosdelfino/Eliza)
 ![Repository Size](https://img.shields.io/github/repo-size/carlosdelfino/Eliza)
+![Last Commit](https://img.shields.io/github/last-commit/carlosdelfino/Eliza)
 
 <!-- Animated Header -->
 <p align="center">
@@ -72,13 +76,18 @@ Elisa implementa um conjunto sofisticado de técnicas de processamento de lingua
 
 ### Temas Detectados
 
-Elisa monitora cinco categorias principais de temas:
+Elisa monitora dez categorias principais de temas:
 
 1. **Relacionamentos**: amor, família, amigos, casamento, namoro
 2. **Trabalho**: empresa, chefe, cliente, carreira, equipe
 3. **Medo**: ansiedade, preocupação, insegurança, culpa, vergonha
 4. **Futuro**: decisões, escolhas, planos, sonhos, objetivos
 5. **Identidade**: autoconceito, sentimentos, desejos, capacidades
+6. **Saúde**: doença, médico, tratamento, corpo, mente, bem-estar
+7. **Criatividade**: arte, música, escrita, ideia, inspiração, expressão
+8. **Espiritualidade**: fé, religião, oração, alma, sentido, propósito
+9. **Aprendizado**: estudo, curso, livro, conhecimento, saber, ensinar
+10. **Lazer**: diversão, jogo, filme, viagem, férias, descanso
 
 ### Regras de Transformação
 
