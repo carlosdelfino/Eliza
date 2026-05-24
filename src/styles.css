@@ -62,6 +62,17 @@ textarea {
   background: #ebeee7;
 }
 
+.visitor-counter {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+.visitor-badge {
+  max-width: 100%;
+  height: auto;
+}
+
 .resources-panel {
   display: flex;
   flex-direction: column;

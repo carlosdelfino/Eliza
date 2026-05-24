@@ -997,6 +997,14 @@ function App() {
         <img src="./images/header_eliza.png" alt="Elisa Header" className="header-image" />
       </header>
       <aside className="sidebar" aria-label="Memoria da conversa">
+        <div className="visitor-counter">
+          <img 
+            src="https://visitor-badge.laobi.icu/badge?page_id=carlosdelfino.Eliza" 
+            alt="Visitantes" 
+            className="visitor-badge"
+          />
+        </div>
+        
         <div className="brand">
           <div className="mark">E</div>
           <div>
